@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mediciones</title>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"
+        id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        #div1 {
+     overflow:scroll;
+     height:150px;
+     width: 600px;
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="span7">
+        <div class="widget stacked widget-table action-table">
+            <div class="widget-header">
+                <h3>Tabla de mediciones</h3>
+            </div>
+            <div>
+                <button onclick='recuperaHumedad()' type="button">Humedad</button>
+                <button onclick='recuperaCentigrados()' type="button">Temperatura (C°)</button>
+                <button onclick='recuperaFahrentheit()' type="button">Temperatura (F°)</button>
+                <button onclick='recuperaIndiceCalorC()' type="button">Indice Calor (C°)</button>
+                <button onclick='recuperaIndiceCalorF()' type="button">Indice Calor (F°)</button>
+            </div>
+            <div id="div1" class="widget-content">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr style="background-color: aquamarine;">
+                            <th>Humedad</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contenidoTablaH">
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="div1" class="widget-content">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr style="background-color: aquamarine;">
+                            <th>Temperatura (C°)</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contenidoTablaC">
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="div1" class="widget-content">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr style="background-color: aquamarine;">
+                            <th>Temperatura (F°)</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contenidoTablaF">
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="div1" class="widget-content">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr style="background-color: aquamarine;">
+                            <th>Indice Calor (C°)</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contenidoTablaIC">
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="div1" class="widget-content">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr style="background-color: aquamarine;">
+                            <th>Indice Calor (F°)</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contenidoTablaIF">
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        function recuperaHumedad() {
+            axios({
+                method: "GET",
+                url: 'http://192.168.71.116/humedad',
+            }).then((res) => {
+                var respuesta=res.data;
+                let contenido=`<tr>
+                            <th>Humedad</th>
+                            <th>${respuesta.humedad}</th>
+                        </tr>`;
+                        contenidoTablaH.innerHTML += contenido;
+            }).catch(error => {
+                console.log(error);
+                throw new Error(error);
+            });
+        }
+
+        function recuperaCentigrados() {
+            axios({
+                method: "GET",
+                url: 'http://192.168.71.116/centigrados',
+            }).then((res) => {
+                var respuesta=res.data;
+                let contenido=`<tr>
+                            <th>Temperatura (C°)</th>
+                            <th>${respuesta.centigrados}</th>
+                        </tr>`;
+                        contenidoTablaC.innerHTML += contenido;
+            }).catch(error => {
+                console.log(error);
+                throw new Error(error);
+            });
+        }
+
+        function recuperaFahrentheit() {
+            axios({
+                method: "GET",
+                url: 'http://192.168.71.116/fahrenheit',
+            }).then((res) => {
+                var respuesta=res.data;
+                let contenido=`<tr>
+                            <th>Temperatura (F°)</th>
+                            <th>${respuesta.fahrenheit}</th>
+                        </tr>`;
+                        contenidoTablaF.innerHTML += contenido;
+            }).catch(error => {
+                console.log(error);
+                throw new Error(error);
+            });
+        }
+
+        function recuperaIndiceCalorC() {
+            axios({
+                method: "GET",
+                url: 'http://192.168.71.116/indiceCalorC',
+            }).then((res) => {
+                var respuesta=res.data;
+                let contenido=`<tr>
+                            <th>Temperatura (C°)</th>
+                            <th>${respuesta.indiceCalorC}</th>
+                        </tr>`;
+                        contenidoTablaIC.innerHTML += contenido;
+            }).catch(error => {
+                console.log(error);
+                throw new Error(error);
+            });
+        }
+
+        function recuperaIndiceCalorF() {
+            axios({
+                method: "GET",
+                url: 'http://192.168.71.116/indiceCalorF',
+            }).then((res) => {
+                var respuesta=res.data;
+                let contenido=`<tr>
+                            <th>Temperatura (C°)</th>
+                            <th>${respuesta.indiceCalorF}</th>
+                        </tr>`;
+                        contenidoTablaIF.innerHTML += contenido;
+            }).catch(error => {
+                console.log(error);
+                throw new Error(error);
+            });
+        }
+
+    </script>
+</body>
+
+</html>
