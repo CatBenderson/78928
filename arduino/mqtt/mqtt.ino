@@ -18,25 +18,26 @@
   - Select your ESP8266 in "Tools -> Board"
 */
 
+#include "DHTesp.h"
 #include <WiFi.h>
 #include <PubSubClient.h>
-#include "DHTesp.h"
+#include <ArduinoJson.h>
 #define DHTpin 15
 
 DHTesp dht;
 
 // Update these with values suitable for your network.
 
-const char *ssid = "dr-rojano";
-const char *password = "78928-tw";
-const char* mqtt_server = "192.168.0.100";
+const char *ssid = "CatBenderson";
+const char *password = "ranita987";
+const char* mqtt_server = "192.168.23.77";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE	(50)
 char msg[MSG_BUFFER_SIZE];
-int value = 0;
+float value = 19.546440;
 
 void setup_wifi() {
 
@@ -112,7 +113,7 @@ void setup() {
   pinMode(2, OUTPUT);     // Initialize the 2 pin as an output
   Serial.begin(115200);
   setup_wifi();
-  client.setServer(mqtt_server, 1883);
+  client.setServer(mqtt_server, 9001);
   client.setCallback(callback);
 }
 
@@ -126,10 +127,13 @@ void loop() {
   unsigned long now = millis();
   if (now - lastMsg > 2000) {
     lastMsg = now;
-    ++value;
-    snprintf (msg, MSG_BUFFER_SIZE, "hello world #%ld", value);
-    Serial.print("Publish message: ");
-    Serial.println(msg);
-    client.publish("outTopic", msg);
+    value = value - .000015;
+    char respuesta[250];
+    DynamicJsonDocument json(1024);
+    json["c1"]=value;
+    json["c2"]=-96.904226;
+    json["temperatura"]=dht.getTemperature();
+    serializeJson(json, respuesta);
+    client.publish("/temperaturaA", respuesta);
   }
 }

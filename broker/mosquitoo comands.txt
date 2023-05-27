@@ -1,0 +1,5 @@
+docker run -it --rm -p 1883:1883 -p 9001:9001 -v 
+
+docker run -it --rm -p 1883:1883 -p 9001:9001 -v C:\Users\ameya\Desktop\"Nueva carpeta"\mosquito:/mosquitto/config/mosquitto.conf eclipse-mosquitto
+
+docker run -it --rm -p 1883:1883 -p 9001:9001 -v c:\Users\ameya\Desktop\broker\mosquito:/mosquitto/config/mosquitto.conf eclipse-mosquitto
